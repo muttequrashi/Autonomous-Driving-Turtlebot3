@@ -25,4 +25,4 @@ To Run the code we need to do following steps on remote PC and Turtlebot.
 
 
 Trial Run Video.
-https://www.veed.io/embed/304b4bfd-df87-4698-babc-a62f01239409
+https://www.veed.io/view/304b4bfd-df87-4698-babc-a62f01239409?panel=share
