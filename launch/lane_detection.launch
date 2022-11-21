@@ -1,0 +1,7 @@
+<launch>
+  <!-- launch turtlebot3_extrinsic_camera_calibration.launch before launch this file -->
+
+  <!-- lane detection -->
+  <node pkg="group_4" type="lane_detection.py" name="lane_detection" output="screen"/>
+
+</launch>

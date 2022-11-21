@@ -1,0 +1,5 @@
+<launch>
+  <!-- lane control -->
+  <node pkg="group_4" type="controller.py" name="controller" output="screen"/>
+
+</launch>
