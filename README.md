@@ -20,6 +20,7 @@ To Run the code we need to do following steps on remote PC and Turtlebot.
          roslaunch group_4 lane_detection.launch 
          roslaunch group_4 controller.launch 
 
+We fixed the turn issue
 
 Trial Run Video.
-https://www.veed.io/embed/304b4bfd-df87-4698-babc-a62f01239409
+https://www.veed.io/view/3ac05459-09aa-445f-a14c-4054755bf27d?panel=share
