@@ -36,12 +36,10 @@ class lane_following:
         warped = thresh
 
         histogram = np.sum(warped[warped.shape[0]//2:,:], axis=0)
-
         # Peak in the first half indicates the likely position of the left lane
         half_width = np.int(histogram.shape[0]/2)
         leftx_base = np.argmax(histogram[:half_width])
-
-        # Peak in the second half indicates the likely position of the right lane
+        #second half indicates the likely position of the right lane
         rightx_base = np.argmax(histogram[half_width:]) + half_width
 
         # Choose the number of sliding windows
@@ -103,6 +101,7 @@ class lane_following:
             right_fit = self.right_lane_fit_bef
 
         try:
+            
             left_fit = np.polyfit(lefty, leftx, 2)
             self.left_lane_fit_bef = left_fit
         except:
@@ -119,8 +118,7 @@ class lane_following:
             right_fitx = right_fit[0]*ploty**2 + right_fit[1]*ploty + right_fit[2]
         except:
             pass
-        
-        
+        print("Left Base ", leftx_base, " Right Base ",rightx_base)
         if leftx_base < 100 and rightx_base > 600:
             cx, cy, _, _ = getPerpCoord(right_fitx[300], 300, right_fitx[301], 301, 255)
             img = cv2.circle(img, (cx,cy), radius=10, color=(0, 0, 255), thickness=-1)
@@ -131,8 +129,9 @@ class lane_following:
                 # self.prev_time = time.time()
                 self.log_status = 'right'
 
-        elif leftx_base > 100 and rightx_base < 600:
+        elif   leftx_base > 100 and rightx_base < 600:
             cx, cy, _, _ = getPerpCoord(left_fitx[300], 300, left_fitx[301], 301, -255)
+            #print('CX Left line', cx)
             img = cv2.circle(img, (cx,cy), radius=10, color=(0, 0, 255), thickness=-1)
             left_lane=np.array([np.transpose(np.vstack([left_fitx, ploty]))])
             final = cv2.polylines(img, np.int_([left_lane]), isClosed=False, color=(0, 255, 255), thickness=24)
@@ -141,8 +140,9 @@ class lane_following:
                 # self.prev_time = time.time()
                 self.log_status = 'left'
 
-        elif leftx_base > 100 and rightx_base > 600:
+        elif leftx_base > 100 and rightx_base > 700:
             cx = int(round(np.mean([left_fitx[300], right_fitx[300]], axis=0)))
+            
             img = cv2.circle(img, (cx, 300), radius=10, color=(0, 0, 255), thickness=-1)
             left_lane=np.array([np.transpose(np.vstack([left_fitx, ploty]))])
             right_lane=np.array([np.transpose(np.vstack([right_fitx, ploty]))])
@@ -166,7 +166,6 @@ class lane_following:
         msg_desired_center.data = cx
 
         #publish
-        print(msg_desired_center)
         self.pub_lane.publish(msg_desired_center)
         self.detect_mask_lane_pub.publish(self.cvBridge.cv2_to_compressed_imgmsg(thresh, "jpg"))
         self.detect_midlane_pub.publish(self.cvBridge.cv2_to_compressed_imgmsg(final, "jpg"))
