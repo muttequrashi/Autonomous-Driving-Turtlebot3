@@ -15,8 +15,6 @@ To Run the code we need to do following steps on remote PC and Turtlebot.
 
      roslaunch turtlebot3_autorace_camera raspberry_pi_camera_publish.launch
 - On PC we have to run following files to start lane detection and tracking in seprate terminals.
-
-<iframe src="https://www.veed.io/embed/304b4bfd-df87-4698-babc-a62f01239409" width="744" height="504" frameborder="0" title="simplescreenrecorder-2022-11-21_15" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
          roslaunch group_4 extrinsic_calibration.launch
          roslaunch group_4 intrinsic_calibration.launch 
          roslaunch group_4 lane_detection.launch 
