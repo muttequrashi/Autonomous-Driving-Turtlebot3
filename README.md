@@ -20,7 +20,7 @@ To Run the code we need to do following steps on remote PC and Turtlebot.
          roslaunch group_4 lane_detection.launch 
          roslaunch group_4 controller.launch 
 
-We fixed the turn issue
+Tunnel Issue is fixed now. 
 
-Trial Run Video.
+Complete Run Video.
 https://www.veed.io/view/3ac05459-09aa-445f-a14c-4054755bf27d?panel=share
