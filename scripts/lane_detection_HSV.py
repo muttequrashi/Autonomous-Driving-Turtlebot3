@@ -24,22 +24,19 @@ class lane_following:
         img = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
         
         # convert to HSV, since red and yellow are the lowest hue colors and come before green
-        img3 = cv2.cvtColor(img, cv2.COLOR_RGB2HLS)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        ####################################################################################
-        
-        ####################################################################################
+
         # filter image to remove noise or smoothing the image
         gray = cv2.medianBlur(gray,9)
         # gray = self.filter.update(gray)
         print(gray.max())
         if gray.max() < 190:
             # create a binary thresholded image on grayscale image between white and yellow
-            thresh = cv2.inRange(gray, 120, 190)
+            thresh = cv2.inRange(gray, 150, 190)
         else:
             
             # create a binary thresholded image on grayscale image between white and yellow
-            thresh = cv2.inRange(gray, 200, 255)
+            thresh = cv2.inRange(gray, 150, 200)
         
         warped = thresh
 
@@ -127,62 +124,6 @@ class lane_following:
         except:
             pass
         print("Left Base ", leftx_base, " Right Base ",rightx_base)
-<<<<<<< HEAD
-        '''
-        if rightx_base < 500:
-            cx, cy, _, _ = getPerpCoord(right_fitx[300], 300, right_fitx[301], 301, 255)
-            img = cv2.circle(img, (cx,cy), radius=10, color=(0, 0, 255), thickness=-1)
-            right_lane=np.array([np.transpose(np.vstack([right_fitx, ploty]))])
-            final = cv2.polylines(img, np.int_([right_lane]), isClosed=False, color=(255, 255, 255), thickness=24)
-            if not self.log_status == 'right':
-                rospy.loginfo('Detect only right lane')
-                # self.prev_time = time.time()
-                self.log_status = 'right'
-
-        elif   leftx_base > 350 and rightx_base < 900 and rightx_base >= 500:
-            cx, cy, _, _ = getPerpCoord(left_fitx[300], 300, left_fitx[301], 301, -255)
-            #print('CX Left line', cx)
-            img = cv2.circle(img, (cx,cy), radius=10, color=(0, 0, 255), thickness=-1)
-            left_lane=np.array([np.transpose(np.vstack([left_fitx, ploty]))])
-            final = cv2.polylines(img, np.int_([left_lane]), isClosed=False, color=(0, 255, 255), thickness=24)
-            if not self.log_status == 'left':
-                rospy.loginfo('Detect only left lane')
-                # self.prev_time = time.time()
-                self.log_status = 'left'
-
-        elif leftx_base > 200 and rightx_base > 690:
-            cx = int(round(np.mean([left_fitx[300], right_fitx[300]], axis=0)))
-            
-            img = cv2.circle(img, (cx, 300), radius=10, color=(0, 0, 255), thickness=-1)
-            left_lane=np.array([np.transpose(np.vstack([left_fitx, ploty]))])
-            right_lane=np.array([np.transpose(np.vstack([right_fitx, ploty]))])
-            final = cv2.polylines(img, np.int_([left_lane]), isClosed=False, color=(0, 255, 255), thickness=24)
-            final = cv2.polylines(final, np.int_([right_lane]), isClosed=False, color=(255, 255, 255), thickness=24)
-            if not self.log_status == 'both':
-                rospy.loginfo('Detect both lanes')
-                # self.prev_time = time.time()
-                self.log_status = 'both'
-
-        else:
-            cx = 470
-            final = img
-            if not self.log_status == None:
-                rospy.loginfo('There is no lane')
-                # self.prev_time = time.time()
-                self.log_status = None
- 
-        # write lane center point pixel x to publish
-        msg_desired_center = Float64()
-        msg_desired_center.data = cx
-
-        #publish
-        self.pub_lane.publish(msg_desired_center)
-        self.detect_mask_lane_pub.publish(self.cvBridge.cv2_to_compressed_imgmsg(img3, "jpg"))
-        self.detect_midlane_pub.publish(self.cvBridge.cv2_to_compressed_imgmsg(final, "jpg"))
-        '''
-        
-=======
->>>>>>> 8f508b4738c7c29d2f1f1c3b9cc6972e347632c7
         if leftx_base < 100 and rightx_base > 600:
             cx, cy, _, _ = getPerpCoord(right_fitx[300], 300, right_fitx[301], 301, 255)
             img = cv2.circle(img, (cx,cy), radius=10, color=(0, 0, 255), thickness=-1)
@@ -218,7 +159,7 @@ class lane_following:
                 self.log_status = 'both'
 
         else:
-            cx = 470
+            cx = 467
             final = img
             if not self.log_status == None:
                 rospy.loginfo('There is no lane')
@@ -229,14 +170,11 @@ class lane_following:
         msg_desired_center = Float64()
         msg_desired_center.data = cx
 
-<<<<<<< HEAD
-        #publish 
-=======
         #publish
->>>>>>> 8f508b4738c7c29d2f1f1c3b9cc6972e347632c7
         self.pub_lane.publish(msg_desired_center)
         self.detect_mask_lane_pub.publish(self.cvBridge.cv2_to_compressed_imgmsg(thresh, "jpg"))
         self.detect_midlane_pub.publish(self.cvBridge.cv2_to_compressed_imgmsg(final, "jpg"))
+
 def increase_brightness(img, value=30):
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     h, s, v = cv2.split(hsv)
