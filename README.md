@@ -373,10 +373,16 @@ Final lane detection on
 ## Demo and Trial Videos
 
 **Previous Trial Video.
-![](images/trial.gif)
+
+<p float="middle">
+  <img src="images/trial.gif"/>
+</p>
 
 **Complete Run Video.
 
-![](images/complete.gif)
+<p float="middle">
+  <img src="images/complete.gif"/>
+</p>
+
 [1]:https://emanual.robotis.com/docs/en/platform/turtlebot3/autonomous_driving/#autonomous-driving
 [2]: https://automaticaddison.com/the-ultimate-guide-to-real-time-lane-detection-using-opencv/
