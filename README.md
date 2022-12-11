@@ -5,7 +5,7 @@
 ![Cover](images/cover.png)
 
 ## Project Goal
-Autonomous Driving of a Ground Differential Robot by Perception based on [Autorace Challenge] (https://emanual.robotis.com/docs/en/platform/turtlebot3/autonomous_driving/#autonomous-driving).
+Autonomous Driving of a Ground Differential Robot by Perception based on [Autorace Challenge] : https://emanual.robotis.com/docs/en/platform/turtlebot3/autonomous_driving/#autonomous-driving
 Till now we have tested the lane tracking with a PD controller.
 
 To Run the code we need to do following steps on remote PC and Turtlebot.
