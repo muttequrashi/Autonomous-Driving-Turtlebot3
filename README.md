@@ -283,6 +283,10 @@ Both Lanes Detected.
 ## Controller
 
 For this project we have used a PD controller. Controller class is defined in [controller.py](scripts/controller.py). 
+
+PD controller:
+  <img src="https://latex.codecogs.com/svg.image?u(t)=K_{p}*e(t)&plus;K_{d}*\frac{\mathrm{d}&space;e(t)}{\mathrm{d}&space;x}" title="u(t)=K_{p}*e(t)+K_{d}*\frac{\mathrm{d} e(t)}{\mathrm{d} x}" />
+
 Working of controller class is as followes:
 
       Subscribe to topics by lane detection to get the center point and publish to turtlebot velocity topic
@@ -320,29 +324,59 @@ self.pub_cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size = 1)
         self.pub_cmd_vel.publish(twist)
         
 ```
+# To Run this code
+
+
 To Run the code we need to do following steps on remote PC and Turtlebot.
 
 - Run ros master on PC. 
 
       roscore
+ 
+- Connecting to Turtlebot3
+
+  Connecting to turtlebot over ssh with password napelturbot
+
+      ssh ubuntu@192.168.0.200
+      
+- Bring Up Turtlebot on PI.
+
+     roslaunch turtlebot3_bringup turtlebot3_robot.launch 
 
 -Start Capturing from Camera.
 
      roslaunch turtlebot3_autorace_camera raspberry_pi_camera_publish.launch
+     
 - On PC we have to run following files to start lane detection and tracking in seprate terminals.
-         roslaunch group_4 extrinsic_calibration.launch
-         roslaunch group_4 intrinsic_calibration.launch 
-         roslaunch group_4 lane_detection.launch 
-         roslaunch group_4 controller.launch 
+         
+      roslaunch group_4 extrinsic_calibration.launch
+      roslaunch group_4 intrinsic_calibration.launch 
+      roslaunch group_4 lane_detection.launch 
+      roslaunch group_4 controller.launch
+- In another terminal open 
 
-Tunnel Issue is fixed now. 
+      rqt_image_view
 
-Previous Trial Video.
-https://www.veed.io/view/3ac05459-09aa-445f-a14c-4054755bf27d?panel=share
+The results can be viewed on the topics.
 
-Complete Run Video.
+      /camera/image/compressed
+      /camera/image_projected/compressed/ 
+Thresholding results on 
+      
+      /camera/mask_lane_detected/compressed
+Final lane detection on 
 
-https://www.veed.io/view/ee8fc177-8a91-421e-b204-14b9655aba3f?panel=share
+      /camera/midlane_detected/compressed
 
+
+
+## Demo and Trial Videos
+
+**Previous Trial Video.
+![](images/trial.gif)
+
+**Complete Run Video.
+
+![](images/complete.gif)
 [1]:https://emanual.robotis.com/docs/en/platform/turtlebot3/autonomous_driving/#autonomous-driving
 [2]: https://automaticaddison.com/the-ultimate-guide-to-real-time-lane-detection-using-opencv/
