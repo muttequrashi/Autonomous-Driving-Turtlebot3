@@ -125,12 +125,13 @@ The code we deloped in the end and used for our final evaluation is [lane_detect
 **Algorithm Steps
 
       Subscribing and Publishing topics
-            ```python
+
+```python
               self.image_lane_sub = rospy.Subscriber('/camera/image_projected/compressed', CompressedImage, self.callback, queue_size = 1, buff_size=2**24)
               self.detect_midlane_pub = rospy.Publisher('/camera/midlane_detected/compressed', CompressedImage, queue_size = 1)
               self.detect_mask_lane_pub = rospy.Publisher('/camera/mask_lane_detected/compressed', CompressedImage, queue_size = 1)
               self.pub_lane = rospy.Publisher('/detect/lane', Float64, queue_size = 1)
-            ```
+```
       Thresholding with two different values 
             '''python
             
