@@ -29,6 +29,18 @@ Install additional dependent packages on Remote PC.
 
       sudo apt install ros-noetic-image-transport ros-noetic-cv-bridge ros-noetic-vision-opencv python3-opencv libopencv-dev ros-noetic-image-proc
 
+## Connecting to Turtlebot3
+
+Connecting to turtlebot over ssh with password napelturbot
+
+      ssh ubuntu@192.168.0.200
+      
+ This is very important to bringup the turtlebot before running any node related to camera to robot control. 
+ 
+Bring Up Turtlebot on PI.
+
+     roslaunch turtlebot3_bringup turtlebot3_robot.launch 
+
 ## Camera Calibaration
 
 For Camera Callibration we have done the same proccedure as listed below. We used the autorace camera package to get the undistorted image so we can perform the lane detection.
@@ -66,8 +78,19 @@ Now to set the region of interest and the warping parameters for projected image
 
 After the extrinsic callibration the results are stored in  turtlebot3_autorace_camera/calibration/extrinsic_calibration/ having two files compensation.yaml and projection.yaml. We copied those files to our package so we can use them to republish the topic coming from raspberry pi after applying the desired projection and compensation. These file are located at [Extrinsic Calibration Files](/calibration/extrinsic_calibration)
 
+## ROS Package
+Overall structure of the ros packge is shown below.
 
+![ROS Package](images/tree.png)
 
+As seen in the above picture we have 4 different launch files [extrinsic_calibration.launch](launch/extrinsic_calibration.launch), [intrinsic_calibration.launch](launch/intrinsic_calibration.launch), [controller.launch](launch/controller.launch) and [lane_detection.launch](launch/lane_detection.launch).
+
+First two the extrinsic_calibration.launch and intrinsic_calibration.launch are responsible to subscribe to camera topic "camera/image/compressed" and then applying the projection and compensation and then publishing it on topics "/camera/image_projected/compressed/", "/camera/image_projected_compensated/compressed". 
+
+We will use these topics to get the projected camera image and perform lane detection. The lane_detection.launch file is running the [lane_detection.py](scripts/lane_detection.py) which is subscribbing to /camera/image_projected/compressed/ performs lane detection and then publishs the thresholding results on "/camera/mask_lane_detected/compressed" and the final lane detection on "/camera/midlane_detected/compressed" and the detected midpoint location in pixels on "/detect/lane". 
+
+The [controller.launch](launch/controller.launch) runs the [controller.py](scripts/controller.py) which subscribes to "/detect/lane", "/control/max_vel"
+and publishes the required velocity on turtlebot velocity topic "/cmd_vel".
 Till now we have tested the lane tracking with a PD controller.
 
 To Run the code we need to do following steps on remote PC and Turtlebot.
@@ -75,12 +98,7 @@ To Run the code we need to do following steps on remote PC and Turtlebot.
 - Run ros master on PC. 
 
       roscore
-- Connecting to turtlebot over ssh.
 
-      ssh ubuntu@192.168.0.200
--Bring Up Turtlebot on PI.
-
-     roslaunch turtlebot3_bringup turtlebot3_robot.launch 
 -Start Capturing from Camera.
 
      roslaunch turtlebot3_autorace_camera raspberry_pi_camera_publish.launch
