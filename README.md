@@ -98,22 +98,26 @@ Till now we have tested the lane tracking with a PD controller.
 For lane detection we are using two different types of threshold values depending on the maximum intensity of pixel in the image. This was implemented to overcome the issue of low light in the tunnel. Our lane detection is mainly based on binary thresholding of the projected image and then creating a histogram. We have 3 different conditions to check if the robot should turn right, left or it should move straight. We are doing that by checking the value of pixels in the right and left half of the histogram. if both halfs have the line we publish the value of center to the "/detect/lane" topic that means robot should move straight. 
 Our main idea of lane detection was inspired by [The Ultimate Guide to Real-Time Lane Detection Using OpenCV][2]. We tried implementing this code with our ROS packge but the results were not very great so due to time contraints we moved to binary thresholding and using some part of the code from [The Ultimate Guide to Real-Time Lane Detection Using OpenCV][2]. The files for this implementation are [lane_detection_1.py](scripts/lane_detection_1.py) and [edge_detection.py](scripts/edge_detection.py)
 
-*Algorithm Steps
+**Algorithm Steps
 
-      *Thresholding
-      *Apply Perspective Transformation to Get a Bird’s Eye View
-      *Identify Lane Line Pixels
-      *Set Sliding Windows for White Pixel Detection
-      *Fill in the Lane Line
-      *Overlay Lane Lines on Original Image
-      *Calculate Lane Line Curvature
-      *Calculate the Center Offset
-      *Display Final Image
-      *Publish Center to controller
+      Thresholding
+      Apply Perspective Transformation to Get a Bird’s Eye View
+      Identify Lane Line Pixels
+      Set Sliding Windows for White Pixel Detection
+      Fill in the Lane Line
+      Overlay Lane Lines on Original Image
+      Calculate Lane Line Curvature
+      Calculate the Center Offset
+      Display Final Image
+      Publish Center to controller
 
 The results were good on the straight path for a short distance but for longer distance it was not very satifactory.
 Some results from the above mentioned algorythem 
-
+<p float="left">
+  <img src="images/masked_image.png" width="100" />
+  <img src="images/midlane.png" width="100" /> 
+  <img src="images/image.png" width="100" />
+</p>
 
 
 To Run the code we need to do following steps on remote PC and Turtlebot.
