@@ -269,6 +269,13 @@ self.detect_mask_lane_pub.publish(self.cvBridge.cv2_to_compressed_imgmsg(thresh,
 self.detect_midlane_pub.publish(self.cvBridge.cv2_to_compressed_imgmsg(final, "jpg"))
 ```
 
+## Results
+
+![Right Lane Detected](images/right.png)
+
+![Left Lane Detected](images/left.png)
+
+![Both Lanes Detected](images/both.png)
 
 To Run the code we need to do following steps on remote PC and Turtlebot.
 
