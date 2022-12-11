@@ -120,6 +120,32 @@ Some results from the above mentioned algorythem
 </p>
 
 
+The code we deloped in the end and used for our final evaluation is [lane_detection.py](scripts/lane_detection.py).
+
+**Algorithm Steps
+
+      Subscribing and Publishing topics
+            '''python
+              self.image_lane_sub = rospy.Subscriber('/camera/image_projected/compressed', CompressedImage, self.callback, queue_size = 1, buff_size=2**24)
+              self.detect_midlane_pub = rospy.Publisher('/camera/midlane_detected/compressed', CompressedImage, queue_size = 1)
+              self.detect_mask_lane_pub = rospy.Publisher('/camera/mask_lane_detected/compressed', CompressedImage, queue_size = 1)
+              self.pub_lane = rospy.Publisher('/detect/lane', Float64, queue_size = 1)
+            '''
+      Thresholding with two different values 
+            '''python
+            
+            '''
+      Apply Perspective Transformation to Get a Bird’s Eye View
+      Identify Lane Line Pixels
+      Set Sliding Windows for White Pixel Detection
+      Fill in the Lane Line
+      Overlay Lane Lines on Original Image
+      Calculate Lane Line Curvature
+      Calculate the Center Offset
+      Display Final Image
+      Publish Center to controller
+
+
 To Run the code we need to do following steps on remote PC and Turtlebot.
 
 - Run ros master on PC. 
