@@ -114,9 +114,9 @@ Our main idea of lane detection was inspired by [The Ultimate Guide to Real-Time
 The results were good on the straight path for a short distance but for longer distance it was not very satifactory.
 Some results from the above mentioned algorythem 
 <p float="left">
-  <img src="images/masked_image.png" width="100" />
-  <img src="images/midlane.png" width="100" /> 
-  <img src="images/image.png" width="100" />
+  <img src="images/masked_image.png" width="200" />
+  <img src="images/midlane.png" width="200" /> 
+  <img src="images/image.png" width="200" />
 </p>
 
 
