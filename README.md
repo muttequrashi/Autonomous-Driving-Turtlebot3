@@ -285,8 +285,9 @@ Both Lanes Detected.
 For this project we have used a PD controller. Controller class is defined in [controller.py](scripts/controller.py). 
 
 PD controller:
-  <img src="https://latex.codecogs.com/svg.image?u(t)=K_{p}*e(t)&plus;K_{d}*\frac{\mathrm{d}&space;e(t)}{\mathrm{d}&space;x}" title="u(t)=K_{p}*e(t)+K_{d}*\frac{\mathrm{d} e(t)}{\mathrm{d} x}" />
-
+  <p float="middle">
+  <img src="images/pd.png"/>
+</p>
 Working of controller class is as followes:
 
       Subscribe to topics by lane detection to get the center point and publish to turtlebot velocity topic
