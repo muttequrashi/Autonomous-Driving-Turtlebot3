@@ -51,6 +51,23 @@ One of the multiple pictures taken during calibration proccess is listed below.
 
 After completing the callibration we saved the data. By default calibrationdata.tar.gz is created at /tmp folder on remote pc. This compressed folder contain the sample images as well as the callibration data in a file named ost.yaml. For using the Autorace Camera package we copied the calibration file data and pasted into the file present in the Autorace Race package named [camerav2_320x240_30fps.yaml](/calibration/intrinsic_calibration/camerav2_320x240_30fps.yaml) 
 
+### Extrinsic Camera Callibration
+
+Open a new terminal and launch the intrinsic camera calibration node.
+      
+      roslaunch turtlebot3_autorace_camera intrinsic_camera_calibration.launch
+Open a new terminal and launch the extrinsic camera calibration node.
+
+      roslaunch turtlebot3_autorace_camera extrinsic_camera_calibration.launch mode:=calibration
+
+Now to set the region of interest and the warping parameters for projected image we can run the following command in new terminal.
+      
+      rosrun rqt_reconfigure rqt_reconfigure
+
+After the extrinsic callibration the results are stored in  turtlebot3_autorace_camera/calibration/extrinsic_calibration/ having two files compensation.yaml and projection.yaml. We copied those files to our package so we can use them to republish the topic coming from raspberry pi after applying the desired projection and compensation. These file are located at [Extrinsic Calibration Files](/calibration/extrinsic_calibration)
+
+
+
 Till now we have tested the lane tracking with a PD controller.
 
 To Run the code we need to do following steps on remote PC and Turtlebot.
