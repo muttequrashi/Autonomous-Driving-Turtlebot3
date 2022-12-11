@@ -269,14 +269,57 @@ self.detect_mask_lane_pub.publish(self.cvBridge.cv2_to_compressed_imgmsg(thresh,
 self.detect_midlane_pub.publish(self.cvBridge.cv2_to_compressed_imgmsg(final, "jpg"))
 ```
 
-## Results
+### Lane Detection Results
 
+Right Lane Detected.
 ![Right Lane Detected](images/right.png)
 
+Left Lane Detected.
 ![Left Lane Detected](images/left.png)
 
+Both Lanes Detected.
 ![Both Lanes Detected](images/both.png)
 
+## Controller
+
+For this project we have used a PD controller. Controller class is defined in [controller.py](scripts/controller.py). 
+Working of controller class is as followes:
+
+      Subscribe to topics by lane detection to get the center point and publish to turtlebot velocity topic
+```python
+self.sub_lane = rospy.Subscriber('/detect/lane', Float64, self.cbFollowLane, queue_size = 1)
+self.sub_max_vel = rospy.Subscriber('/control/max_vel', Float64, self.cbGetMaxVel, queue_size = 1)
+self.pub_cmd_vel = rospy.Publisher('/cmd_vel', Twist, queue_size = 1)
+```
+      Get the center point and calculate error and then compute velocity to minimize the error 470 is value of center we fixed (set point)
+      Linear velocity for this project is fixed we only change the rotational velocity
+```python
+        center = desired_center.data
+        error = center - 470
+        current_time = time.time()
+        Kp = 0.0001
+        Kd = 0.001
+        ki=0
+        dt=current_time-self.prev_time
+        self.integral= (self.integral + error)*dt
+        self.angular_z += Kp * (error - self.lastError) + Kd * (error - 2 * self.prevError + self.lastError) +ki *self.integral   
+        self.angular_z += Kp * (error - self.lastError) + Kd * (error - 2 * self.prevError + self.lastError)
+        self.prevError = self.lastError
+        self.lastError = error
+        twist = Twist()
+        twist.linear.x = 0.06       
+        twist.linear.y = 0
+        twist.linear.z = 0
+        twist.angular.x = 0
+        twist.angular.y = 0
+        twist.angular.z = -max(self.angular_z, -1.0) if self.angular_z < 0 else -min(self.angular_z, 1.0)
+        self.prev_time=current_time
+```
+        Publish Velocity
+```python
+        self.pub_cmd_vel.publish(twist)
+        
+```
 To Run the code we need to do following steps on remote PC and Turtlebot.
 
 - Run ros master on PC. 
