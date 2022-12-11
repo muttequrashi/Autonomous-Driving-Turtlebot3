@@ -99,6 +99,7 @@ For lane detection we are using two different types of threshold values dependin
 Our main idea of lane detection was inspired by [The Ultimate Guide to Real-Time Lane Detection Using OpenCV][2]. We tried implementing this code with our ROS packge but the results were not very great so due to time contraints we moved to binary thresholding and using some part of the code from [The Ultimate Guide to Real-Time Lane Detection Using OpenCV][2]. The files for this implementation are [lane_detection_1.py](scripts/lane_detection_1.py) and [edge_detection.py](scripts/edge_detection.py)
 
 *Algorithm Steps
+
       *Thresholding
       *Apply Perspective Transformation to Get a Bird’s Eye View
       *Identify Lane Line Pixels
