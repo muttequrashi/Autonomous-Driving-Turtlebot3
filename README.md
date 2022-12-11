@@ -1,3 +1,10 @@
+# Self-Driving Turtlebot3 Using Camera based Lane Tracking
+
+
+
+![Cover](images/cover.png)
+
+
 Till now we have tested the lane tracking with a PD controller.
 
 To Run the code we need to do following steps on remote PC and Turtlebot.
