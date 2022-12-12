@@ -127,7 +127,7 @@ class lane_following:
         except:
             pass
         print("Left Base ", leftx_base, " Right Base ",rightx_base)
-<<<<<<< HEAD
+
         '''
         if rightx_base < 500:
             cx, cy, _, _ = getPerpCoord(right_fitx[300], 300, right_fitx[301], 301, 255)
@@ -180,9 +180,6 @@ class lane_following:
         self.detect_mask_lane_pub.publish(self.cvBridge.cv2_to_compressed_imgmsg(img3, "jpg"))
         self.detect_midlane_pub.publish(self.cvBridge.cv2_to_compressed_imgmsg(final, "jpg"))
         '''
-        
-=======
->>>>>>> 8f508b4738c7c29d2f1f1c3b9cc6972e347632c7
         if leftx_base < 100 and rightx_base > 600:
             cx, cy, _, _ = getPerpCoord(right_fitx[300], 300, right_fitx[301], 301, 255)
             img = cv2.circle(img, (cx,cy), radius=10, color=(0, 0, 255), thickness=-1)
@@ -229,11 +226,6 @@ class lane_following:
         msg_desired_center = Float64()
         msg_desired_center.data = cx
 
-<<<<<<< HEAD
-        #publish 
-=======
-        #publish
->>>>>>> 8f508b4738c7c29d2f1f1c3b9cc6972e347632c7
         self.pub_lane.publish(msg_desired_center)
         self.detect_mask_lane_pub.publish(self.cvBridge.cv2_to_compressed_imgmsg(thresh, "jpg"))
         self.detect_midlane_pub.publish(self.cvBridge.cv2_to_compressed_imgmsg(final, "jpg"))
