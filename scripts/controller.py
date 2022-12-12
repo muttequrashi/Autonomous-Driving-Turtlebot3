@@ -18,11 +18,7 @@ class ControlLane():
         self.angular_z = 0
         self.MAX_VEL = 0.1
         self.prev_time = time.time()
-<<<<<<< HEAD
         self.integral=0
-=======
-        
->>>>>>> 8f508b4738c7c29d2f1f1c3b9cc6972e347632c7
         rospy.on_shutdown(self.fnShutDown)
 
     def cbGetMaxVel(self, max_vel_msg):
@@ -37,15 +33,12 @@ class ControlLane():
         Kp = 0.0001
         Kd = 0.001
         ki=0.0002
-<<<<<<< HEAD
         dt=current_time-self.prev_time
         print(dt)
         self.integral= (self.integral + error)*dt
         self.angular_z += Kp * (error - self.lastError) + Kd * (error - 2 * self.prevError + self.lastError) #+ki *self.integral
-=======
         
         self.angular_z += Kp * (error - self.lastError) + Kd * (error - 2 * self.prevError + self.lastError)
->>>>>>> 8f508b4738c7c29d2f1f1c3b9cc6972e347632c7
         print(self.angular_z)
         self.prevError = self.lastError
         self.lastError = error
